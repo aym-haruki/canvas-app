@@ -1,0 +1,46 @@
+.canvas-border {
+  border: 2px solid rgb(255, 255, 255);
+}
+
+.canvas-background {
+  background-image: url('./images/bg/IMG_4357.JPG');
+  background-size: cover; /* 画像がキャンバス全体にフィットするように */
+  background-repeat: no-repeat; /* 画像が繰り返されないように */
+}
+
+/* コンテナ全体を水平に配置 */
+.container {
+  display: flex;
+  padding-top: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* 左側の要素 */
+.left {
+  flex: 1; /* 左側を可変幅に設定 */
+  padding: 20px; /* 必要なパディングを設定 */
+  display: flex; /* 画像を横に並べるためにFlexboxを使用 */
+  flex-wrap: wrap; /* 画像が幅を超えた場合に折り返し */
+  align-content: flex-start; /* 画像が上端に配置されるように */
+}
+
+/* 画像のラッパー */
+.image-wrapper {
+  width: 70%; /* 画像の幅を70%に設定 */
+  margin: 5px; /* 画像の間隔を設定 */
+  display: inline-block; /* 画像が横に並ぶように */
+}
+
+/* 画像 */
+.left img {
+  max-width: 100%; /* 画像の最大幅を100%に設定 */
+  height: auto; /* 高さを自動調整してアスペクト比を保つ */
+}
+
+
+/* 右側の要素 */
+.right {
+  flex: 1; /* 右側を可変幅に設定 */
+  padding: 20px; /* 必要なパディングを設定 */
+}

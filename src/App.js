@@ -7,7 +7,11 @@ import image4 from "./images/IMG_4354.PNG";
 import image5 from "./images/IMG_4355.PNG";
 import image6 from "./images/IMG_4356.PNG";
 import image7 from "./images/IMG_4021.PNG";
-import image8 from "./images/IMG_4012.PNG";
+import image8 from "./images/IMG_4367.PNG";
+import image10 from "./images/IMG_4368.PNG";
+import image11 from "./images/IMG_4369.PNG";
+import image12 from "./images/IMG_4370.PNG";
+import image13 from "./images/IMG_4371.PNG";
 
 function CanvasComponent() {
   const canvasRef = useRef(null);
@@ -17,41 +21,66 @@ function CanvasComponent() {
   const canvasHeight = 570;
   const imageList = [
     {
+      "altName": 'Draggable Image 12',
+      "image": image12,
+      "width": 300
+    },
+    {
+      "altName": 'Draggable Image 13',
+      "image": image13,
+      "width": 200
+    },
+    {
       "altName": 'Draggable Image 1s',
-      "image": image1
+      "image": image1,
+      "width": 100
     },
     {
       "altName": 'Draggable Image 2',
-      "image": image2
+      "image": image2,
+      "width": 100
     },
     {
       "altName": 'Draggable Image 3',
-      "image": image3
+      "image": image3,
+      "width": 200
     },
     {
       "altName": 'Draggable Image 4',
-      "image": image4
+      "image": image4,
+      "width": 100
     },
     {
       "altName": 'Draggable Image 5',
-      "image": image5
+      "image": image5,
+      "width": 100
     },
     {
       "altName": 'Draggable Image 6',
-      "image": image6
+      "image": image6,
+      "width": 100
     },
     {
       "altName": 'Draggable Image 7',
-      "image": image7
+      "image": image7,
+      "width": 200
     },
     {
       "altName": 'Draggable Image 8',
-      "image": image8
+      "image": image8,
+      "width": 300
     },
     {
       "altName": 'Draggable Image 10',
-      "image": image6
+      "image": image10,
+      "width": 100
+    },
+    {
+      "altName": 'Draggable Image 11',
+      "image": image11,
+      "width": 100
     }
+  
   ];
 
   const handleDrop = (e) => {
@@ -70,7 +99,7 @@ function CanvasComponent() {
         onStart={() => setSelectedImage(item.image)}
         onStop={handleDrop}
       >
-          <img src={item.image} alt={item.altName} width={100} className="image" />
+          <img src={item.image} alt={item.altName} width={item.width} className="image" />
       </Draggable>
     );
   });

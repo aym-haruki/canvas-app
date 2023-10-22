@@ -17,7 +17,7 @@ body {
 }
 
 .canvas-background {
-  background-image: url('./images/bg/bg-board.png');
+  /* background-image: url('./images/bg/bg-board.png'); */
   background-size: contain; /* 画像がキャンバス全体にフィットするように */
   background-size: cover; /* 画像を画面に合わせて表示 */
   background-repeat: no-repeat; /* 画像の繰り返し表示を無効化 */
@@ -67,4 +67,39 @@ body {
 /* 画像間の余白を調整 */
 .image:not(:last-child) {
   margin-right: 10px; /* 最後の画像以外に右の余白を追加 */
+}
+
+/** ボタン **/
+.button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #3498db; /* 青色 */
+  color: #ffffff; /* テキスト色は白 */
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  /* オプション: テキストの大文字変換 */
+  text-transform: uppercase;
+
+  /* オプション: シャドウ */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+  background-color: #2980b9; /* ホバー時は少し濃い青色に */
+}
+
+.button:active {
+  background-color: #2471a3; /* アクティブ時（クリック時）はさらに濃い青色に */
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center; /* 水平方向の中央揃え */
+  width: 100%;             /* コンテナの幅を100%に設定 */
+  padding: 10px 0;
 }

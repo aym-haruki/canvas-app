@@ -13,6 +13,7 @@ import image10 from "./images/IMG_4368.PNG";
 import image11 from "./images/IMG_4369.PNG";
 import image12 from "./images/IMG_4370.PNG";
 import image13 from "./images/IMG_4371.PNG";
+import bgImg from "./images/bg/bg-org.png";
 
 function CanvasComponent() {
   const canvasRef = useRef(null);
@@ -91,11 +92,10 @@ function CanvasComponent() {
 
   const handleDrop = (e) => {
     e.preventDefault();
-
+    console.log('selectedImage', selectedImage);
     const img = new Image();
     img.src = selectedImage;
     img.onload = () => {
-      console.log(e);
       // 要素の位置とサイズを取得
       const rect = e.target.getBoundingClientRect();
       console.log(rect);
@@ -138,6 +138,7 @@ function CanvasComponent() {
         }
       });
     };
+    console.log('img', img);
     setSelectedImage(null);
   };
 
@@ -152,10 +153,26 @@ function CanvasComponent() {
     );
   });
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    // // 1. 背景画像をロード
+    const bgImage = new Image();
+    bgImage.src = bgImg;
+    bgImage.onload = () => {
+      var pattern = ctx.createPattern(bgImage, "repeat");
+      ctx.fillStyle = pattern;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    };
+  }, []); // 注意: 依存配列は空です
+
   const handleExportClick = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const rect = canvasRef.current.getBoundingClientRect();
+
+    // リセット 背景まで消えるので一旦コメントアウト
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // すべての画像をキャンバスに描画
     images.forEach((image) => {
@@ -166,6 +183,13 @@ function CanvasComponent() {
       // `ctx.drawImage(image, dx, dy, dWidth, dHeight): 画像を指定されたサイズにスケールして指定された位置に描画します。
       ctx.drawImage(image.img, image.left - rect.left, image.top - rect.top, width, height);
     });
+
+    const currentDateTime = new Date().toLocaleString();
+    ctx.font = "30pt Arial";
+    // テキストの幅を取得
+    const textWidth = ctx.measureText(`${currentDateTime}`).width;
+    ctx.fillStyle = 'white';
+    ctx.fillText(`${currentDateTime}`, ((canvasWidth - textWidth) / 2), canvasHeight / 2);
 
     // キャンバスの内容をエクスポート
     const dataUrl = canvas.toDataURL('image/png');
@@ -187,7 +211,9 @@ function CanvasComponent() {
           ></canvas>
       </div>
 
-      <button onClick={handleExportClick}>Export as Image</button>
+      <div className='btn-container'>
+        <button onClick={handleExportClick} className="button">Export as Image</button>
+      </div>
 
       <div className="image-container bg-image-container">
         {imageItems}

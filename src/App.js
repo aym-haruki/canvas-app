@@ -104,6 +104,23 @@ function CanvasComponent() {
     );
   });
 
+  const handleExportClick = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+
+    // すべての画像をキャンバスに描画
+    images.forEach((image) => {
+      ctx.drawImage(image.img, image.x, image.y);
+    });
+
+    // キャンバスの内容をエクスポート
+    const dataUrl = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = 'exported_image.png';
+    a.click();
+};
+
   return (
     <div className="container">
       <div className="canvas-section">
@@ -116,9 +133,11 @@ function CanvasComponent() {
           ></canvas>
       </div>
 
-        <div className="image-container bg-image-container">
-          {imageItems}
-        </div>
+      <button onClick={handleExportClick}>Export as Image</button>
+
+      <div className="image-container bg-image-container">
+        {imageItems}
+      </div>
     </div>
   );
 }

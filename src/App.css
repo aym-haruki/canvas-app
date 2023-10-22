@@ -48,7 +48,7 @@ body {
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 50px;
 }
 
 .bg-image-container {
@@ -56,7 +56,9 @@ body {
 }
 
 .image {
-  max-width: calc(25% - 10px); /* 画像の最大幅を設定し、横に4つ並ぶ */
+  max-height: calc(25% - 10px); /* 画像の最大高さを設定し、縦に4つ並ぶ */
+  margin: 10px 0 0 10px; /* 画像間の余白を調整し、一定の範囲で折り返し */
+  width: auto; /* 幅を画像の元のアスペクト比に基づいて自動調整 */
   margin: 0 10px 10px 0; /* 画像間の余白を調整し、一定の範囲で折り返し */
   object-fit: contain; /* アスペクト比を維持しつつコンテナに収まるように調整 */
   object-position: center; /* 画像を中央に配置 */

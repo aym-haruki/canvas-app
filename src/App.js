@@ -8,6 +8,7 @@ import image5 from "./images/IMG_4355.PNG";
 import image6 from "./images/IMG_4356.PNG";
 import image7 from "./images/IMG_4021.PNG";
 import image8 from "./images/IMG_4367.PNG";
+import image9 from "./images/IMG_4012.PNG";
 import image10 from "./images/IMG_4368.PNG";
 import image11 from "./images/IMG_4369.PNG";
 import image12 from "./images/IMG_4370.PNG";
@@ -71,6 +72,11 @@ function CanvasComponent() {
       "width": 300
     },
     {
+      "altName": 'Draggable Image 9',
+      "image": image9,
+      "width": 300
+    },
+    {
       "altName": 'Draggable Image 10',
       "image": image10,
       "width": 100
@@ -85,10 +91,52 @@ function CanvasComponent() {
 
   const handleDrop = (e) => {
     e.preventDefault();
+
     const img = new Image();
     img.src = selectedImage;
     img.onload = () => {
-      setImages(prevImages => [...prevImages, {img, x: e.clientX, y: e.clientY, scale: 1}]);
+      console.log(e);
+      // 要素の位置とサイズを取得
+      const rect = e.target.getBoundingClientRect();
+      console.log(rect);
+
+      setImages(prevImages => {
+        // 既存の配列内で選択された画像と一致するものがあるかを検索
+        const existingImageIndex = prevImages.findIndex(item => item.img.src === img.src);
+        
+        const scale = rect.width / e.target.naturalWidth;
+
+        // 一致する画像が見つかった場合
+        if (existingImageIndex !== -1) {
+          // 一致する画像の情報を上書き
+          const updatedImages = [...prevImages];
+          updatedImages[existingImageIndex] = {
+            img,
+            x: e.clientX,
+            y: e.clientY,
+            top: rect.top,
+            left: rect.left,
+            scaleWidth: rect.width,
+            scaleHeight: rect.height,
+            scale: scale,
+            rect: rect
+          };
+          return updatedImages;
+        } else {
+          // 一致する画像がない場合、新しい画像情報を配列の末尾に追加
+          return [...prevImages, {
+            img,
+            x: e.clientX,
+            y: e.clientY,
+            top: rect.top,
+            left: rect.left,
+            scaleWidth: rect.width,
+            scaleHeight: rect.height,
+            scale: scale,
+            rect: rect
+          }];
+        }
+      });
     };
     setSelectedImage(null);
   };
@@ -107,10 +155,16 @@ function CanvasComponent() {
   const handleExportClick = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
+    const rect = canvasRef.current.getBoundingClientRect();
 
     // すべての画像をキャンバスに描画
     images.forEach((image) => {
-      ctx.drawImage(image.img, image.x, image.y);
+      // // ドロップした画像サイズを計算
+      const width = image.img.width * image.scale;
+      const height = image.img.height * image.scale;
+
+      // `ctx.drawImage(image, dx, dy, dWidth, dHeight): 画像を指定されたサイズにスケールして指定された位置に描画します。
+      ctx.drawImage(image.img, image.left - rect.left, image.top - rect.top, width, height);
     });
 
     // キャンバスの内容をエクスポート

@@ -13,8 +13,8 @@ function CanvasComponent() {
   const canvasRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [images, setImages] = useState([]);
-  const canvasWidth = 800;
-  const canvasHeight = 600;
+  const canvasWidth = 810;
+  const canvasHeight = 570;
   const imageList = [
     {
       "altName": 'Draggable Image 1s',
@@ -70,31 +70,26 @@ function CanvasComponent() {
         onStart={() => setSelectedImage(item.image)}
         onStop={handleDrop}
       >
-        <div class="image-wrapper">
-          <img src={item.image} alt={item.altName} width={100} />
-        </div>
+          <img src={item.image} alt={item.altName} width={100} className="image" />
       </Draggable>
     );
   });
 
   return (
-    <div>
-      <div className="container">
-        <div className="left">
-          {imageItems}
-        </div>
-        
-        <div classname="right">
-          <canvas 
-            ref={canvasRef} 
-            width={canvasWidth} 
-            height={canvasHeight} 
-            onDrop={handleDrop}
-            className="canvas-border canvas-background"
-            ></canvas>
-        </div>
+    <div className="container">
+      <div className="canvas-section">
+        <canvas 
+          ref={canvasRef} 
+          width={canvasWidth} 
+          height={canvasHeight} 
+          onDrop={handleDrop}
+          className="canvas canvas-background canvas-border"
+          ></canvas>
       </div>
 
+        <div className="image-container bg-image-container">
+          {imageItems}
+        </div>
     </div>
   );
 }
